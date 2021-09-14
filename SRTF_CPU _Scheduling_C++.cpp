@@ -113,6 +113,7 @@ int main()
     }
     length_cycle = max_completion_time - min_arrival_time;
 
+    
      //Output
     cout<<"\nProcess No.\tAT\tCPU Burst Time\tCT\tTAT\tWT\tRT\n";
     for(int i=0;i<n;i++)
