@@ -11,6 +11,7 @@ struct process_struct
   int at;
   int bt;
   int ct,wt,tat,rt,start_time;
+  int bt_remaining;
 }ps[100];
 
 bool comparatorAT(struct process_struct a,struct process_struct b)
@@ -34,7 +35,7 @@ int main()
 {
     
     int n,index;
-    float bt_remaining[100],cpu_utilization;
+    int cpu_utilization;
     queue<int> q;
     bool visited[100]={false},is_first_process=true;
     int current_time = 0,max_completion_time;
@@ -56,7 +57,7 @@ int main()
     {
         cout<<"\nEnter Process " <<i<< " Burst Time: ";
         cin >> ps[i].bt;
-        bt_remaining[i]= ps[i].bt;
+        ps[i].bt_remaining= ps[i].bt;
     }
     
     cout<<"\nEnter time quanta: ";
@@ -70,9 +71,10 @@ int main()
    
     while(completed != n) 
     {
-      index = q.front();
+      index = q.front();      
       q.pop();
-      if(bt_remaining[index] == ps[index].bt)
+      
+      if(ps[index].bt_remaining == ps[index].bt)
       {
             ps[index].start_time = max(current_time,ps[index].at);
             total_idle_time += (is_first_process == true) ? 0 : ps[index].start_time - current_time;
@@ -81,15 +83,15 @@ int main()
              
       }
 
-      if(bt_remaining[index]-tq > 0)
-      {
-            bt_remaining[index] -= tq;
+      if(ps[index].bt_remaining-tq > 0)
+      {    
+            ps[index].bt_remaining -= tq;
             current_time += tq;
       }
       else 
       {
-            current_time += bt_remaining[index];
-            bt_remaining[index] = 0;
+            current_time += ps[index].bt_remaining;
+            ps[index].bt_remaining = 0;
             completed++;
 
             ps[index].ct = current_time;
@@ -102,17 +104,18 @@ int main()
             sum_rt += ps[index].rt;
       }
 
+
        //check which new Processes needs to be pushed to Ready Queue from Input list
       for(int i = 1; i < n; i++) 
       {
-          if(bt_remaining[i] > 0 && ps[i].at <= current_time && visited[i] == false) 
+          if(ps[i].bt_remaining > 0 && ps[i].at <= current_time && visited[i] == false) 
           {
             q.push(i);
             visited[i] = true;
           }
       }
       //check if Process on CPU needs to be pushed to Ready Queue
-      if(bt_remaining[index] > 0) 
+      if( ps[index].bt_remaining> 0) 
           q.push(index);
             
       //if queue is empty, just add one process from list, whose remaining burst time > 0
@@ -120,7 +123,7 @@ int main()
       {
           for(int i = 1; i < n; i++)
           {
-            if(bt_remaining[i] > 0)
+            if(ps[i].bt_remaining > 0)
             {
               q.push(i);
               visited[i] = true;
@@ -129,7 +132,7 @@ int main()
           }
       }
    } //end of while
-
+   
    //Calculate Length of Process completion cycle
   max_completion_time = INT_MIN;
   
@@ -137,14 +140,14 @@ int main()
         max_completion_time = max(max_completion_time,ps[i].ct);
       
   length_cycle = max_completion_time - ps[0].at;  //ps[0].start_time; 
-  
+    
   cpu_utilization = (float)(length_cycle - total_idle_time)/ length_cycle;
 
   //sort so that process ID in output comes in Original order (just for interactivity- Not needed otherwise)  
   sort(ps, ps+n , comparatorPID);
 
   //Output
-  cout<<"\nProcess No.\tAT\tCPU Burst Time\tCT\tTAT\tWT\tRT\n";
+  cout<<"\nProcess No.\tAT\tCPU Burst Time\tStart Time\tCT\tTAT\tWT\tRT\n";
   for(int i=0;i<n;i++)
     cout<<i<<"\t\t"<<ps[i].at<<"\t"<<ps[i].bt<<"\t\t"<<ps[i].ct<<"\t"<<ps[i].tat<<"\t"<<ps[i].wt<<"\t"<<ps[i].rt<<endl;
   cout<<endl;    
