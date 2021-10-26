@@ -97,7 +97,7 @@ int main()
                 ps[min_index].wt= ps[min_index].tat - ps[min_index].bt;
                 ps[min_index].rt = ps[min_index].start_time - ps[min_index].at;
             
-            
+             
                 sum_tat +=ps[min_index].tat;
                 sum_wt += ps[min_index].wt;
                 sum_rt += ps[min_index].rt;
