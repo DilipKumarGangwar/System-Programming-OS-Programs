@@ -1,5 +1,5 @@
-// C Program to Implement Safety Algorithm- (Banker's Algorithm) 
-// Deadlock Avoidance Algorithm
+// C Program to Implement Safety Algorithm- (Banker's Algorithm- Deadlock Avoidance Algorithm) 
+//This algo Prints whether the given system state is in SAFE state or UNSAFE state. If safe, then prints the SAFE SEQUENCE
 
 #include <stdio.h>
 #include <stdbool.h>
