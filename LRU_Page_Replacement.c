@@ -26,8 +26,8 @@ void updatePageTable(struct PageTable PT[],int page,int fr_no,int status,int acc
 {
     PT[page].valid=status;
     if(status == 1 )  
-    {  PT[page].last_time_of_access =  access_time;
-      // as such this line is not needed, we can remove this
+    {  
+      PT[page].last_time_of_access =  access_time;
       PT[page].frame_no=fr_no;
     }
 }
@@ -90,6 +90,7 @@ int main()
             frame[current]=reference_string[i];
             printFrameContents(frame,no_of_frames);
             updatePageTable(PT,reference_string[i],current,1,i);
+            
             current = current + 1;
             if(current == no_of_frames)
             {
@@ -105,7 +106,8 @@ int main()
             //mark that page as INVALID in Page Table
             int LRU_page_index;
             searchLRUPage(PT,frame,no_of_frames,&LRU_page_index);
-            updatePageTable(PT,frame[LRU_page_index], -1 ,0,i);  //send invalid framw_no =-1
+            updatePageTable(PT,frame[LRU_page_index], -1 ,0,i);  //send invalid frame_no =-1
+
             frame[LRU_page_index]=reference_string[i];
             printFrameContents(frame,no_of_frames);   
             //Update PT      
