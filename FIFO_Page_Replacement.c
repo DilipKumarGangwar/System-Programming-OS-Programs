@@ -1,4 +1,6 @@
 //C Program to Implement the FIFO(First In First Out) Page replacement Algorithm
+//Time Complexity = O(n)
+//Space Complexity= O(no of frames + size of Page Table)
 
 #include<stdio.h>
 #include<stdbool.h>
