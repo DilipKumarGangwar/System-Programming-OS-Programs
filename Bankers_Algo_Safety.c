@@ -19,11 +19,11 @@ void input(struct process_info process[no_of_process],int available[no_of_resour
     //Fill array of Structure
     for(int i=0;i<no_of_process;i++)
     {
-      printf("Enter process[%d] info\n",i);
-      printf("Enter Maximum Need: ");
+      //printf("Enter process[%d] info\n",i);
+     // printf("Enter Maximum Need: ");
       for(int j=0;j<no_of_resources;j++)
         scanf("%d",&process[i].max[j]);
-      printf("Enter No. of Allocated Resources for this process: ");
+     // printf("Enter No. of Allocated Resources for this process: ");
       for(int j=0;j<no_of_resources;j++)
       {
         scanf("%d",&process[i].allocated[j]); 
@@ -31,7 +31,7 @@ void input(struct process_info process[no_of_process],int available[no_of_resour
         process[i].need[j]= process[i].max[j] - process[i].allocated[j];
       }
     }
-    printf("Enter Available Resources: ");
+   // printf("Enter Available Resources: ");
     for(int i=0;i<no_of_resources;i++)
     {
       scanf("%d",&available[i]);
@@ -136,30 +136,31 @@ bool isSafeState(struct process_info process[no_of_process],int available[no_of_
 
 int main()
 {
-    printf("Enter No of Process\n");
+  //  printf("Enter No of Process\n");
     scanf("%d",&no_of_process);
-    printf("Enter No of Resource Instances in system\n");
+   // printf("Enter No of Resource Instances in system\n");
     scanf("%d",&no_of_resources);
     int available[no_of_resources];
     int safeSequence[no_of_process];
     //Create Array of Structure to store Processes's Informations
     struct process_info process[no_of_process];
    
-    printf("***********Enter details of processes*************\n");
+   // printf("***********Enter details of processes*************\n");
     //Take the Input
     input(process,available);
 
     //Print the Info in Tabular Form 
-    showTheInfo(process);
+   // showTheInfo(process);
     if(isSafeState(process,available,safeSequence))
     {
 
-      printf("\nSystem is in SAFE State\n");
-      printf("Safe Sequence is: ");
-      for(int i=0;i<no_of_process;i++)
-        printf("P[%d] ",safeSequence[i]);
+    //  printf("\nSystem is in SAFE State\n");
+    //  printf("Safe Sequence is: ");
+   //   for(int i=0;i<no_of_process;i++)
+       // printf("P[%d] ",safeSequence[i]);
+  printf("1");
     }
     else
-      printf("System is in UNSAFE State\n");
+      printf("0");
     return 0;
 }
