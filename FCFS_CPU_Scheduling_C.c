@@ -26,8 +26,6 @@ int comparatorAT(const void * a, const void *b)
      return -1;  // No sorting
    else if( x>=y) // = is for stable sort
     return 1;    // Sort
-   
-
 } 
 int comparatorPID(const void * a, const void *b)
 {
