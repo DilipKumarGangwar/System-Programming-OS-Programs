@@ -27,6 +27,7 @@ int comparatorAT(const void * a, const void *b)
    else if( x>=y) // = is for stable sort
     return 1;    // Sort
 } 
+
 int comparatorPID(const void * a, const void *b)
 {
    int x =((struct process_struct *)a) -> pid;
@@ -35,8 +36,8 @@ int comparatorPID(const void * a, const void *b)
      return -1;  // No sorting
    else if( x>=y)
     return 1;    // Sort  
-
 } 
+
 int main()
 {
     int n;
