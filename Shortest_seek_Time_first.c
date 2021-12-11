@@ -1,4 +1,4 @@
-//C Program to Implement the FCFS Disk Scheduling Algorithm
+//C Program to Implement the SSTF Disk Scheduling Algorithm
 
 #include<stdio.h>
 #include<stdlib.h> //for abs
@@ -64,8 +64,8 @@ int main()
     printf("\nEnter the initial Position of RW head: ");
     scanf("%d",&initial_pos);
     
-    bool visited[total_cylinders];        //to keep track of visited cylinder
-    memset(visited,false,total_cylinders*sizeof(bool));
+    bool visited[n];        //to keep track of visited cylinder
+    memset(visited,false,n*sizeof(bool));
     
     if(initial_pos < 0 || initial_pos > total_cylinders - 1)
     {

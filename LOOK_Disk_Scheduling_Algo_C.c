@@ -18,20 +18,11 @@ int applySCANAlgo(int total_cylinders,int request_queue[], int initial_pos, int 
 	int total_head_movement=0,j=0,k=0;
 	int left[n], right[n];
 
-	// appending end values
-	// which has to be visited
-	// before reversing the direction
 	if (direction == 0)
-    {
-		right[j++]=total_cylinders-1;
         right[j++]=initial_pos;
-    }
+
     else if (direction == 1)
-    {
-		left[k++]=0;  //here  0 is initial cylinder of HDD
-        left[k++]=initial_pos;
-    }
-   
+        left[k++]=initial_pos;   
     
 	for (int i = 0; i<n; i++) {
 		if (request_queue[i] < initial_pos)
