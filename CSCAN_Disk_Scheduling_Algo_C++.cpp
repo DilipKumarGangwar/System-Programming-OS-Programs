@@ -47,7 +47,6 @@ int moveLeft(vector<int> left,vector<int> right, int total_cylinders,vector<int>
         initial_pos = left[i];
         // appending current track to seek sequence
         seek_sequence.push_back(left[i]); 
-        cout<<"dcd";
    }
    total_head_movement += (total_cylinders - 1);
    initial_pos = total_cylinders - 1;
@@ -64,7 +63,7 @@ int moveLeft(vector<int> left,vector<int> right, int total_cylinders,vector<int>
    return total_head_movement;
 }
 
-int applySCANAlgo(int total_cylinders, vector<int> request_queue, int initial_pos, vector<int> &seek_sequence, int direction,int n)
+int applyCSCANAlgo(int total_cylinders, vector<int> request_queue, int initial_pos, vector<int> &seek_sequence, int direction,int n)
 {
 	int total_head_movement=0;
 	vector<int> left, right;
@@ -123,7 +122,7 @@ int main()
         exit(0);
     }
     
-    total_head_movement = applySCANAlgo(total_cylinders, request_queue,initial_pos,seek_sequence,direction,n);
+    total_head_movement = applyCSCANAlgo(total_cylinders, request_queue,initial_pos,seek_sequence,direction,n);
     
     
     // *********** OUTPUT ********** 

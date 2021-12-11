@@ -1,78 +1,94 @@
 // C program to implement CSCAN Disk Scheduling algorithm
+//TO BE UPDATED... Currently it is incorrect
 
 #include<stdio.h>
 #include<stdlib.h>
 
-int comparator(const void * a, const void *b)
+
+int moveRight(vector<int> left,vector<int> right,int total_cylinders, vector<int> request_queue, int initial_pos, vector<int> &seek_sequence,int n)
 {
-   int x =*(int *)a;
-   int y =*(int *)b;
-   if(x<y)
-     return -1;  // No sorting
-   else if( x>=y) // = is for stable sort
-    return 1;    // Sort
-} 
-
-int applySCANAlgo(int total_cylinders,int request_queue[], int initial_pos, int seek_sequence[], int direction,int *sequence_size,int n)
-{
-	int total_head_movement=0,j=0,k=0;
-	int left[n], right[n];
-
-	if (direction == 0)
-        right[j++]=initial_pos;
-
-    else if (direction == 1)
-        left[k++]=initial_pos;   
-    
-	for (int i = 0; i<n; i++) {
-		if (request_queue[i] < initial_pos)
-			left[k++]=request_queue[i];
-		if (request_queue[i] > initial_pos)
-			right[j++]=request_queue[i];
-	}
+   int total_head_movement=0; 
+   for (int i = 0; i < right.size(); i++) 
+   {
+        // calculate absolute distance
+        total_head_movement += abs(initial_pos - right[i]);	
+        initial_pos = right[i];
+        // appending current track to seek sequence
+        seek_sequence.push_back(right[i]); 
+   }
+   total_head_movement += (total_cylinders - 1);
+   initial_pos = 0;
    
-	// sorting left and right arrays
-    qsort((void *)left,k, sizeof(int),comparator);
-    qsort((void *)right,j, sizeof(int),comparator);
-    
+   //move right
+   for (int i = 0; i < left.size(); i++) 
+   {
+        // calculate absolute distance
+        total_head_movement += abs(initial_pos - left[i]);	
+        initial_pos = left[i];
+        // appending current track to seek sequence
+        seek_sequence.push_back(left[i]); 
+   }
+   return total_head_movement;
+}
+
+
+int moveLeft(vector<int> left,vector<int> right, int total_cylinders,vector<int> request_queue, int initial_pos, vector<int> &seek_sequence,int n)
+{
+   int total_head_movement=0; 
+   for (int i = left.size() - 1; i >=0; i--) 
+   {
+        // calculate absolute distance
+        total_head_movement += abs(initial_pos - left[i]);	
+        initial_pos = left[i];
+        // appending current track to seek sequence
+        seek_sequence.push_back(left[i]); 
+   }
+   total_head_movement += (total_cylinders - 1);
+   initial_pos = total_cylinders - 1;
+   
+   //move right
+   for (int i = right.size() -1; i >=0; i--)
+   {
+        // calculate absolute distance
+        total_head_movement += abs(initial_pos - right[i]);	
+        initial_pos = right[i];
+        // appending current track to seek sequence
+        seek_sequence.push_back(right[i]); 
+   }
+   return total_head_movement;
+}
+
+int applyCSCANAlgo(int total_cylinders, vector<int> request_queue, int initial_pos, vector<int> &seek_sequence, int direction,int n)
+{
+	int total_head_movement=0;
+	vector<int> left, right;
+
+	// appending end values which has to be visited before reversing the direction
+    right.push_back(total_cylinders-1);
+	left.push_back(0);  //here  0 is initial cylinder of HDD
+
+	for (int i = 0; i<n; i++) 
+    {
+		if (request_queue[i] < initial_pos)
+			left.push_back(request_queue[i]);
+		if (request_queue[i] > initial_pos)
+			right.push_back(request_queue[i]);
+	}
+  
+	// sorting left and right vectors
+	sort(left.begin(), left.end());
+	sort(right.begin(), right.end());
 
 	// run the while loop two times one by one scanning right and left of the head
-	int completed = 2;
-	while (completed--)
-    {
-        if (direction == 0) 
-        {
-			for (int i = 0; i < j; i++) 
-            {
-                // calculate absolute distance
-                total_head_movement += abs(initial_pos - right[i]);	
-                initial_pos = right[i];
-                // appending current track to seek sequence
-                seek_sequence[*sequence_size]=right[i]; 
-                (*sequence_size)++;
-               
-            }
-            direction = 1;
-		}
+	if(direction == 0 ) //right
+        total_head_movement += moveRight(left, right, total_cylinders,request_queue, initial_pos, seek_sequence, n);
 
-		else if (direction == 1)
-        {
-			for (int i = k - 1; i >= 0; i--) 
-            {
-                // calculate absolute distance
-				total_head_movement +=  abs(initial_pos - left[i]);	
-                initial_pos = left[i];
-                // appending current track to seek sequence
-                seek_sequence[*sequence_size]=left[i]; 
-                (*sequence_size)++;
-            }
-            direction = 0;
-		}
-		
-	}
-
+    else if(direction == 1 ) //left
+       total_head_movement += moveLeft( left,right, total_cylinders, request_queue,  initial_pos, seek_sequence,  n);
+	
     return total_head_movement;
 }
+
 
 int main()
 {
@@ -104,8 +120,7 @@ int main()
         exit(0);
     }
     
-    total_head_movement = applySCANAlgo(total_cylinders,request_queue,initial_pos,seek_sequence,direction,&sequence_size,n);
-    
+    total_head_movement = applyCSCANAlgo(total_cylinders, request_queue,initial_pos,seek_sequence,direction,n);
     
     // *********** OUTPUT ********** 
     printf("\n\n*********** OUTPUT **********");
