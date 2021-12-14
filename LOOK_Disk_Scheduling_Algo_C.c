@@ -1,4 +1,4 @@
-// C program to implement SCAN Disk Scheduling algorithm
+// C program to implement LOOK Disk Scheduling algorithm
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -18,9 +18,9 @@ int applySCANAlgo(int total_cylinders,int request_queue[], int initial_pos, int 
 	int total_head_movement=0,j=0,k=0;
 	int left[n], right[n];
 
+    //Change wrt SCAN algo
 	if (direction == 0)
         right[j++]=initial_pos;
-
     else if (direction == 1)
         left[k++]=initial_pos;   
     

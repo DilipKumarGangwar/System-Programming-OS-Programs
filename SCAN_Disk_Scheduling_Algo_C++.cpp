@@ -1,6 +1,5 @@
 // C++ program to implement SCAN Disk Scheduling algorithm
 
-
 #include<iostream>
 #include<vector>
 #include<iomanip>
@@ -13,16 +12,19 @@ int applySCANAlgo(int total_cylinders, vector<int> request_queue, int initial_po
 	int total_head_movement=0;
 	vector<int> left, right;
 
-	// appending end values which has to be visited before reversing the direction
-	
-	if (direction == 0)
+	// appending end values which has to be visited before reversing the direction	
+	if(direction == 0)
     {
-		right.push_back(total_cylinders - 1);
+        //find max in request queue
+        if(initial_pos > *min_element(request_queue.begin(), request_queue.end()))
+		   right.push_back(total_cylinders - 1);
         right.push_back(initial_pos);
     }
-    else if (direction == 1)
+    else if(direction == 1)
     {
-		left.push_back(0);  //here  0 is initial cylinder of HDD
+        //find max in request queue
+        if(initial_pos < *max_element(request_queue.begin(), request_queue.end()))
+		    left.push_back(0);  //here  0 is initial cylinder of HDD
         left.push_back(initial_pos);
     }
 
@@ -66,10 +68,9 @@ int applySCANAlgo(int total_cylinders, vector<int> request_queue, int initial_po
             }
             direction = 0;
 		}
-		
-	}
+      }  //end of while
     return total_head_movement;
-}
+}  //end of applySCANALgo()
 
 int main()
 {
@@ -104,6 +105,7 @@ int main()
     
     // *********** OUTPUT ********** 
     cout<<"\n\n*********** OUTPUT **********\n";
+    cout<<"\nSeek Sequence: ";
     for(int i=0;i<seek_sequence.size();i++)
      cout<<seek_sequence.at(i)<<" ";
 

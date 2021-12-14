@@ -2,6 +2,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<limits.h>
 
 int comparator(const void * a, const void *b)
 {
@@ -13,22 +14,47 @@ int comparator(const void * a, const void *b)
     return 1;    // Sort
 } 
 
+int min_element(int request_queue[],int n)
+{
+    int min = INT_MAX;
+    for(int i=0;i<n;i++)
+    {
+       if(request_queue[i] < min)
+          min = request_queue[i];
+    }
+    return min;  
+}
+
+int max_element(int request_queue[],int n)
+{
+   int max = INT_MIN;
+   for(int i=0;i<n;i++)
+   {
+      if(request_queue[i] > max)
+          max = request_queue[i];
+   }
+    return max;  
+}
+
+
 int applySCANAlgo(int total_cylinders,int request_queue[], int initial_pos, int seek_sequence[], int direction,int *sequence_size,int n)
 {
 	int total_head_movement=0,j=0,k=0;
-	int left[n], right[n];
+	int left[n+1], right[n+1];  //in worst case(corner cases), size will be n+1
 
 	// appending end values
 	// which has to be visited
 	// before reversing the direction
-	if (direction == 0)
+	if(direction == 0)
     {
-		right[j++]=total_cylinders-1;
+        if(initial_pos > min_element(request_queue,n))
+     		right[j++]=total_cylinders-1;
         right[j++]=initial_pos;
     }
-    else if (direction == 1)
+    else if(direction == 1)
     {
-		left[k++]=0;  //here  0 is initial cylinder of HDD
+        if(initial_pos < max_element(request_queue,n))
+		   left[k++]=0;  //here  0 is initial cylinder of HDD
         left[k++]=initial_pos;
     }
    
@@ -78,10 +104,9 @@ int applySCANAlgo(int total_cylinders,int request_queue[], int initial_pos, int 
             direction = 0;
 		}
 		
-	}
-
+	}  //end of while
     return total_head_movement;
-}
+}  //end of applySCANALgo()
 
 int main()
 {

@@ -12,7 +12,8 @@ int applyLOOKAlgo(int total_cylinders, vector<int> request_queue, int initial_po
 	int total_head_movement=0;
 	vector<int> left, right;
 
-	if (direction == 0)
+	//Change wrt SCAN algo
+    if (direction == 0)
         right.push_back(initial_pos);
     else if (direction == 1)
         left.push_back(initial_pos);
@@ -23,6 +24,7 @@ int applyLOOKAlgo(int total_cylinders, vector<int> request_queue, int initial_po
 		if (request_queue[i] > initial_pos)
 			right.push_back(request_queue[i]);
 	}
+  
   
 	// sorting left and right vectors
 	sort(left.begin(), left.end());
@@ -95,6 +97,7 @@ int main()
     
     // *********** OUTPUT ********** 
     cout<<"\n\n*********** OUTPUT **********\n";
+    cout<<"\nSeek Sequence: ";
     for(int i=0;i<seek_sequence.size();i++)
      cout<<seek_sequence.at(i)<<" ";
 
