@@ -1,5 +1,4 @@
-// C++ program to implement SCAN Disk Scheduling algorithm
-
+// C++ program to implement C-SCAN Disk Scheduling algorithm
 
 #include<iostream>
 #include<vector>
@@ -7,8 +6,6 @@
 #include<cstdlib> //for abs
 #include<algorithm>
 using namespace std;
-
-
 
 int moveRight(vector<int> left,vector<int> right,int total_cylinders, vector<int> request_queue, int initial_pos, vector<int> &seek_sequence,int n)
 {
@@ -21,10 +18,11 @@ int moveRight(vector<int> left,vector<int> right,int total_cylinders, vector<int
         // appending current track to seek sequence
         seek_sequence.push_back(right[i]); 
    }
-   total_head_movement += (total_cylinders - 1);
+
+   left.size() ?  total_head_movement += (total_cylinders - 1): 0 ;
    initial_pos = 0;
    
-   //move right
+   //move right again if needed (i.e if left array is not empty)
    for (int i = 0; i < left.size(); i++) 
    {
         // calculate absolute distance
@@ -33,6 +31,7 @@ int moveRight(vector<int> left,vector<int> right,int total_cylinders, vector<int
         // appending current track to seek sequence
         seek_sequence.push_back(left[i]); 
    }
+   
    return total_head_movement;
 }
 
@@ -48,7 +47,8 @@ int moveLeft(vector<int> left,vector<int> right, int total_cylinders,vector<int>
         // appending current track to seek sequence
         seek_sequence.push_back(left[i]); 
    }
-   total_head_movement += (total_cylinders - 1);
+   
+   right.size() ?  total_head_movement += (total_cylinders - 1): 0 ;
    initial_pos = total_cylinders - 1;
    
    //move right
@@ -60,6 +60,7 @@ int moveLeft(vector<int> left,vector<int> right, int total_cylinders,vector<int>
         // appending current track to seek sequence
         seek_sequence.push_back(right[i]); 
    }
+  
    return total_head_movement;
 }
 
@@ -68,9 +69,20 @@ int applyCSCANAlgo(int total_cylinders, vector<int> request_queue, int initial_p
 	int total_head_movement=0;
 	vector<int> left, right;
 
-	// appending end values which has to be visited before reversing the direction
-    right.push_back(total_cylinders-1);
-	left.push_back(0);  //here  0 is initial cylinder of HDD
+    // appending end values which has to be visited during reversing the direction
+    if( ( initial_pos > *min_element(request_queue.begin(), request_queue.end())) && (initial_pos < *max_element(request_queue.begin(), request_queue.end())) )
+    {
+          right.push_back(total_cylinders - 1);
+          left.push_back(0);  //here  0 is initial cylinder of HDD
+    }
+    
+
+    //Decide on basis of direction where to put initial position (this is only needed if we want to print this initia_pos also
+    // in seek_sequence otherwise remove thsi if-else
+	if(direction == 0)
+        right.push_back(initial_pos);
+    else if(direction == 1)
+        left.push_back(initial_pos);    
 
 	for (int i = 0; i<n; i++) 
     {
@@ -84,13 +96,10 @@ int applyCSCANAlgo(int total_cylinders, vector<int> request_queue, int initial_p
 	sort(left.begin(), left.end());
 	sort(right.begin(), right.end());
 
-	// run the while loop two times one by one scanning right and left of the head
 	if(direction == 0 ) //right
         total_head_movement += moveRight(left, right, total_cylinders,request_queue, initial_pos, seek_sequence, n);
-
     else if(direction == 1 ) //left
        total_head_movement += moveLeft( left,right, total_cylinders, request_queue,  initial_pos, seek_sequence,  n);
-	
     return total_head_movement;
 }
 
@@ -121,12 +130,13 @@ int main()
         cout<<"Wrong Initial Position Enetered !!";
         exit(0);
     }
-    
+
     total_head_movement = applyCSCANAlgo(total_cylinders, request_queue,initial_pos,seek_sequence,direction,n);
     
     
     // *********** OUTPUT ********** 
     cout<<"\n\n*********** OUTPUT **********\n";
+    cout<<"Seek Sequence: ";
     for(int i=0;i<seek_sequence.size();i++)
      cout<<seek_sequence.at(i)<<" ";
 

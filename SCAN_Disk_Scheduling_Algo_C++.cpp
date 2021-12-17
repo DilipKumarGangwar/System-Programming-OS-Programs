@@ -15,7 +15,7 @@ int applySCANAlgo(int total_cylinders, vector<int> request_queue, int initial_po
 	// appending end values which has to be visited before reversing the direction	
 	if(direction == 0)
     {
-        //find max in request queue
+        //find min in request queue
         if(initial_pos > *min_element(request_queue.begin(), request_queue.end()))
 		   right.push_back(total_cylinders - 1);
         right.push_back(initial_pos);
