@@ -1,4 +1,4 @@
-// C++ program to implement C-SCAN Disk Scheduling algorithm
+// C++ program to implement C-LOOK Disk Scheduling algorithm
 
 #include<iostream>
 #include<vector>
