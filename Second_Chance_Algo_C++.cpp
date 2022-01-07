@@ -69,7 +69,7 @@ int applySecondChanceAlgo(vector<int> reference_string, int no_of_frames,vector<
           total_page_fault++;
        } 
 
-       //Print the contenet inside frames
+       //Print the content present inside frames
        printFrames(no_of_frames,frames);
 
     }

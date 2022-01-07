@@ -72,7 +72,7 @@ int applySecondChanceAlgo(int reference_string[], int n,int no_of_frames,frameTy
           total_page_fault++;
        } 
 
-       //Print the contenet inside frames
+       //Print the content present inside frames
        printFrames(no_of_frames,frames);
 
     }
