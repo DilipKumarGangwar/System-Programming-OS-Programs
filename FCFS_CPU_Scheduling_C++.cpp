@@ -1,6 +1,8 @@
 /*.................C++ Program to Implement FCFS ( First Come First Serve ) CPU SCheduling Algorithm.....................
 FCFS - A Non Preemptive Algorithm
 This Program works for same as well as different arrival times
+Video Explanation: https://www.youtube.com/watch?v=M9Hj6u3H2tA&list=PLVKIC9j3jSYtCEAffM_51qVWeQus70cqc&index=7
+
 */
 
 #include<iostream>

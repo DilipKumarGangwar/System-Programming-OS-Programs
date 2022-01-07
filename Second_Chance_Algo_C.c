@@ -1,4 +1,5 @@
 // C program to implement Second Chance Algorithm which is one of the LRU Approximation Page Replacement Algorithm 
+// Find Video Explanation: https://www.youtube.com/watch?v=_dUNVEBSA_Y&list=PLVKIC9j3jSYtCEAffM_51qVWeQus70cqc&index=31&t=1337s
 
 #include<stdio.h>
 #include<stdbool.h>

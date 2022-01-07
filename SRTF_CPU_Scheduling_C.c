@@ -1,6 +1,7 @@
 /*.................C Program to Implement SRTF ( Shortest Remaining Time First) CPU SCheduling Algorithm.....................
 SRTF - A Preemptive Algorithm
 This Program works for same as well as different arrival times
+Video Explanation: https://www.youtube.com/watch?v=ykeqkgPzFCw&list=PLVKIC9j3jSYtCEAffM_51qVWeQus70cqc&index=9
 */
 
 #include<stdio.h>

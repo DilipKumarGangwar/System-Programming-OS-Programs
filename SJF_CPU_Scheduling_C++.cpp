@@ -1,6 +1,7 @@
 /*.................C++ Program to Implement SJF ( Shortest Job First) CPU SCheduling Algorithm.....................
 SJF - A Non Preemptive Algorithm
 This Program works for same as well as different arrival times
+Video Explanation: https://www.youtube.com/watch?v=UdO5RdHxDJQ&list=PLVKIC9j3jSYtCEAffM_51qVWeQus70cqc&index=8
 */
 
 #include<iostream>
