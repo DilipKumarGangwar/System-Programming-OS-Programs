@@ -1,6 +1,6 @@
 //C Program to Implement the FCFS Disk Scheduling
 #include<stdio.h>
-
+#include<stdlib.h>
 int main()
 {
     int total_head_movement=0,initial_pos,n ;
